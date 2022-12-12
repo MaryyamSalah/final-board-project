@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import { useState } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "./firebase";
+import SingleBoard from "./pages/SingleBoard";
 function App() {
   const [isAuth, setIsAuth] = useState(false);
   const signUserOut = () => {
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login setIsAuth={setIsAuth} />} />
+        <Route path="/sigleBoard:id" element={<SingleBoard />} />
       </Routes>
     </div>
   );
