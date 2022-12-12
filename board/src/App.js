@@ -1,4 +1,5 @@
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import {Navbar,Nav,Container} from 'react-bootstrap';
 import {
   BrowserRouter,
