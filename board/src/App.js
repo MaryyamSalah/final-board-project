@@ -20,7 +20,7 @@ function App() {
     <>
       <Navbar bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="#home">Final-Board</Navbar.Brand>
+          <Navbar.Brand href="#home">React-Board</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link as ={Link} to="/">Home</Nav.Link>
             <Nav.Link as={Link} to ="/about">About</Nav.Link>
