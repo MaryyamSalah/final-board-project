@@ -1,7 +1,192 @@
-import { React } from "react";
+
 import { useParams } from "react-router-dom";
-function SingleBoard() {
-  const { id } = useParams();
-  return <div className="bg-gray-100 min-h-screen">{id}</div>;
+//import Container from 'react-bootstrap/Container';
+//import Row from 'react-bootstrap/Row';
+//import Col from 'react-bootstrap/Col';
+//import Card from 'react-bootstrap/Card';
+//import Button from 'react-bootstrap/Button';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { db } from "../firebase";
+import { collection, addDoc, onSnapshot } from "firebase/firestore"
+//import TasksCard from "./TasksCard";
+
+function SingleBoard(){
+    //const [Title, setTitle] = useState("")
+     
+    const [newTaskInput, setNewTaskInput] = useState({});
+    const [taskList, setTaskList] = useState([]);
+  
+    useEffect(() => {
+      onSnapshot(collection(db, "tasksList"), (snapshot) => {
+        snapshot.docChanges().forEach((docChange) => {
+          if (docChange.type === "added") {
+            setTaskList((prevTaskList) => [
+              ...prevTaskList,
+              docChange.doc.data(),
+            ]);
+          } else if (docChange.type === "removed") {
+            setTaskList(
+                taskList.filter((task) => task.id !== docChange.doc.id)
+            );
+          }
+        });
+      });
+    }, []);
+
+
+    const handleOnChange = (event) => {
+      const keyName = event.target.name;
+      const value = event.target.value;
+      setNewTaskInput((prev) => {
+        // Copy the previous object (state) and only change the keyName that I want
+        // prev is aka newMovieInput
+        return { ...prev, [keyName]: value };
+      });
+    };
+
+    
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    // instead of saving new items to our state
+    // we will create a post request to add items to our database
+    await addDoc(collection(db, "tasksList"), {
+      ...newTaskInput,
+    });
+    // Clear the form
+    setNewTaskInput({
+      title: "",
+      description: "",
+      assign: "",
+      start: "",
+    });
+  };
+
+   
+    return (
+      <div className="bg-gray-100 min-h-screen content-center">
+      <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 px-2 py-2 gap-5 ">
+        <div className="card1 ">
+       
+        <h1>ToDo</h1>
+
+      
+
+
+        <form className="form-todo" style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    marginTop: "20px",   
+                }}   
+                  onSubmit={handleSubmit}   
+                    >
+         <label>Title</label>
+         <input
+            type="text"
+            placeholder="Task Title"
+            name="title"
+            value={newTaskInput.title}
+            onChange={handleOnChange}
+          />
+          <label>Describtion</label>
+            <input
+            className="desc"
+            type="text"
+            placeholder="Describtion"
+            name="description"
+            value={newTaskInput.description}
+            onChange={handleOnChange}
+          />
+          
+            <label>Assign</label>
+           <input
+            type="text"
+            placeholder="Assign"
+            name="assign"
+            value={newTaskInput.assign}
+            onChange={handleOnChange}
+          />
+           <label>Started</label>
+           <input
+            type="text"
+            placeholder="start"
+            name="start"
+            value={newTaskInput.start}
+            onChange={handleOnChange}
+          />
+
+        <div>
+        <button
+                className="rounded-md bg-purple-800 text-gray-200 mb-10 py-2 px-6 mt-3 flex mx-auto"
+              type="submit" text={"Add new Task"}
+              >
+               Add Task
+              </button>
+     
+            
+        </div>
+
+   
+    </form>
+
+
+
+
+
+
+
+
+    {taskList.map((task) => {
+          return (
+                 
+
+
+                    
+                      <div className='card-todoo'>
+                      
+                           <span>{task.title}</span>
+                                <Link to={`/task/${task.id}`} key={task.id}>
+
+                                      <button className='rounded-md bg-purple-800 text-gray-200 mb-10 py-2 px-6 mt-3 flex mx-auto' variant="primary">Edit</button>
+
+                                </Link>
+                              
+                                {/* { document.querySelectorAll('.edit').addEventListener('click', event => {
+                              const CONTAINER = document.querySelector(".CONTAINER");
+                                CONTAINER.innerHTML = `
+                                <h1>hello</h1>
+                                `;
+                              })
+                                } */}
+
+                  
+                      </div>
+                  
+
+                  
+                  
+                  );
+        })}
+
+
+        
+    
+      </div>
+
+
+
+
+
+
+
+    
+    
+      </div></div>
+    
+    );
+
 }
+
+
+
 export default SingleBoard;
