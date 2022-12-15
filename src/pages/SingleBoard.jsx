@@ -1,25 +1,21 @@
 
 import { useParams } from "react-router-dom";
-//import Container from 'react-bootstrap/Container';
-//import Row from 'react-bootstrap/Row';
-//import Col from 'react-bootstrap/Col';
-//import Card from 'react-bootstrap/Card';
-//import Button from 'react-bootstrap/Button';
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { db } from "../firebase";
 import { collection, addDoc, onSnapshot } from "firebase/firestore"
-//import TasksCard from "./TasksCard";
+
 
 function SingleBoard(){
-    //const [Title, setTitle] = useState("")
+   
      
     const [newTaskInput, setNewTaskInput] = useState({});
     const [taskList, setTaskList] = useState([]);
   
     useEffect(() => {
-      onSnapshot(collection(db, "tasksList"), (snapshot) => {
+      const unsub = onSnapshot(collection(db, "tasksList"), (snapshot) => {
         snapshot.docChanges().forEach((docChange) => {
+          console.log(docChange)
           if (docChange.type === "added") {
             setTaskList((prevTaskList) => [
               ...prevTaskList,
@@ -32,6 +28,7 @@ function SingleBoard(){
           }
         });
       });
+      return () => unsub();
     }, []);
 
 
@@ -64,11 +61,12 @@ function SingleBoard(){
 
    
     return (
-      <div className="bg-gray-100 min-h-screen content-center">
-      <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 px-2 py-2 gap-5 ">
+      <div className="bg-gray-100 min-h-screen w-full text-center flex items-center flex-col gap-5">
+        <h1 className="text-purple-800 uppercase font-semibold text-2xl">TODO</h1>
+      <div className="flex justify-center items-center gap-6 ">
         <div className="card1 ">
        
-        <h1>ToDo</h1>
+     
 
       
 
@@ -76,7 +74,8 @@ function SingleBoard(){
         <form className="form-todo" style={{
                     display: "flex",
                     flexDirection: "column",
-                    marginTop: "20px",   
+                    marginTop: "20px",  
+                    padding:"20px"
                 }}   
                   onSubmit={handleSubmit}   
                     >
@@ -110,20 +109,18 @@ function SingleBoard(){
            <input
             type="text"
             placeholder="start"
-            name="start"
+            name="Start"
             value={newTaskInput.start}
             onChange={handleOnChange}
           />
 
         <div>
         <button
-                className="rounded-md bg-purple-800 text-gray-200 mb-10 py-2 px-6 mt-3 flex mx-auto"
+                className="rounded-md bg-purple-800 h-full px-5 py-2 my-5 text-white font-medium rounded-md"
               type="submit" text={"Add new Task"}
               >
-               Add Task
+               Add Todo Item
               </button>
-     
-            
         </div>
 
    
@@ -134,7 +131,7 @@ function SingleBoard(){
 
 
 
-
+    <h1 className="text-purple-800 uppercase font-semibold text-2xl">Task List</h1>
 
     {taskList.map((task) => {
           return (
@@ -142,13 +139,15 @@ function SingleBoard(){
 
 
                     
-                      <div className='card-todoo'>
-                      
+                      <div className='w-full text-center flex items-center flex-col gap-5 '>
+                        <div className="w-96 bg-slate-300 backdrop-blur-lg px-3 py-5 my-5 rounded-md ">
+                   
                            <span>{task.title}</span>
                                 <Link to={`/task/${task.id}`} key={task.id}>
 
-                                      <button className='rounded-md bg-purple-800 text-gray-200 mb-10 py-2 px-6 mt-3 flex mx-auto' variant="primary">Edit</button>
-
+                                      <button className='bg-white text-blue-600 px-2 py-2 mx-1 font-medium rounded-md' variant="primary">Edit</button>
+                                      <button className="bg-white text-green-600 px-2 py-2 mx-1 font-medium rounded-md">Completed</button>
+                                      <button className="bg-white text-red-600 px-2 py-2 mx-1 font-medium rounded-md">Delete {}</button>
                                 </Link>
                               
                                 {/* { document.querySelectorAll('.edit').addEventListener('click', event => {
@@ -159,11 +158,11 @@ function SingleBoard(){
                               })
                                 } */}
 
+                
+                     
                   
-                      </div>
-                  
-
-                  
+</div>
+             </div>     
                   
                   );
         })}
