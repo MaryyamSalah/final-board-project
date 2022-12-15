@@ -17,6 +17,12 @@ function Navbar({ isAuth, signUserOut }) {
         >
           Boards
         </Link>
+        <Link
+          to="/aboutus"
+          className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium "
+        >
+          About us
+        </Link>
         {isAuth ? (
           <button
             onClick={signUserOut}

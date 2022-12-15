@@ -1,6 +1,13 @@
 import { React, useEffect, useState } from "react";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 import { db } from "../firebase";
+import { async } from "@firebase/util";
 
 function Boards({ navigate }) {
   const [boardTitle, setBoardTitle] = useState("");
@@ -31,6 +38,11 @@ function Boards({ navigate }) {
   function goToSingleBoard(id) {
     navigate(`./sigleBoard:${id}`);
   }
+  async function remove(id) {
+    const boardDoc = doc(db, "Boards", id);
+    await deleteDoc(boardDoc);
+    setBoardsList(boardsList.filter((bord) => bord.id !== id));
+  }
   return (
     <div className="bg-gray-100 min-h-screen ">
       <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 px-2 py-2 gap-5">
@@ -39,10 +51,16 @@ function Boards({ navigate }) {
             <div className="border-gray-800 border rounded-lg">
               <h1 className="text-2xl text-center mt-6">{bord.title}</h1>
               <button
-                className="rounded-md bg-purple-800 text-gray-200 mb-10 py-2 px-6 mt-3 flex mx-auto"
+                className="rounded-md bg-purple-800 text-gray-200 mb-2 py-2 w-36 mt-3 flex flex-col justify-center mx-auto"
                 onClick={() => goToSingleBoard(bord.id)}
               >
-                Open
+                <span>Open</span>
+              </button>
+              <button
+                className="rounded-md bg-purple-800 text-gray-200 mb-10 py-2 w-36 flex flex-col text-center mt-3 mx-auto"
+                onClick={() => remove(bord.id)}
+              >
+                <span>Delete</span>
               </button>
             </div>
           );

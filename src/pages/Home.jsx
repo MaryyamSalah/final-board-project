@@ -8,8 +8,8 @@ import Login from "./Login";
 import home from "../images/home.png";
 function Home() {
   return (
-    <div className="bg-gray-100 min-h-screen flex justify-between">
-      <div className="flex justify-center flex-col text-center -translate-y-16 pl-20">
+    <div className="bg-gray-100 min-h-screen flex flex-col xl:flex-row justify-between">
+      <div className="flex justify-center flex-col text-center mt-20 xl:mt-0 xl:-translate-y-16 pl-20">
         <h1 className="text-6xl text-gray-800 font-bold ">
           Retask brings all your tasks, <br />
           teammates, and tools together
@@ -32,8 +32,8 @@ function Home() {
           </Link>
         </div>
       </div>
-      <div className="max-w-4xl">
-        <img src={home} alt="" />
+      <div className="max-w-4xl mx-auto xl:mx-0">
+        <img src={home} alt="" className="" />
       </div>
     </div>
   );
