@@ -16,7 +16,11 @@ import Boards from "./pages/Boards";
 import About from "./pages/About";
 function App() {
   const navigate = useNavigate();
-  const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth"));
+  const [isAuth, setIsAuth] = useState(
+    localStorage.getItem("isAuth") === null
+      ? false
+      : localStorage.getItem("isAuth")
+  );
   const signUserOut = () => {
     signOut(auth).then(() => {
       localStorage.removeItem("isAuth");
@@ -27,8 +31,14 @@ function App() {
     <div>
       <Navbar isAuth={isAuth} signUserOut={signUserOut} />
       <Routes>
-        <Route path="/boards" element={<Boards navigate={navigate} />} />
-        <Route path="/" element={<Home navigate={navigate} />} />
+        <Route
+          path="/boards"
+          element={<Boards navigate={navigate} isAuth={isAuth} />}
+        />
+        <Route
+          path="/"
+          element={<Home navigate={navigate} isAuth={isAuth} />}
+        />
         <Route path="/login" element={<Login setIsAuth={setIsAuth} />} />
         <Route path="/sigleBoard:id" element={<SingleBoard />} />
         <Route path="/aboutus" element={<About />} />

@@ -6,9 +6,9 @@ import { db } from "../firebase";
 import Boards from "./Boards";
 import Login from "./Login";
 import home from "../images/home.png";
-function Home() {
+function Home({ isAuth }) {
   return (
-    <div className="bg-gray-100 min-h-screen flex flex-col xl:flex-row justify-between">
+    <div className="bg-[#E0DFE7] min-h-screen flex flex-col xl:flex-row justify-between">
       <div className="flex justify-center flex-col text-center mt-20 xl:mt-0 xl:-translate-y-16 pl-20">
         <h1 className="text-6xl text-gray-800 font-bold ">
           Retask brings all your tasks, <br />
@@ -18,15 +18,18 @@ function Home() {
           Keep everything in the same place—even if your team isn’t.
         </p>
         <div className="flex mx-auto">
+          {!isAuth && (
+            <Link
+              to="./login"
+              className="rounded-md bg-purple-800 text-white mb-10 py-2 px-6 mt-3 mr-5 w-40"
+            >
+              Login
+            </Link>
+          )}
+
           <Link
-            to="./login"
-            className="rounded-md bg-purple-800 text-gray-200 mb-10 py-2 px-6 mt-3 mr-5 w-40"
-          >
-            Login
-          </Link>
-          <Link
-            to="./boards"
-            className="rounded-md bg-gray-800 text-gray-200 mb-10 py-2 px-6 mt-3 w-40"
+            to={isAuth ? "./boards" : "./login"}
+            className="rounded-md bg-gray-800 text-white mb-10 py-2 px-6 mt-3 w-40"
           >
             Create Board
           </Link>
