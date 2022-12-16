@@ -14,6 +14,7 @@ import { auth } from "./firebase";
 import SingleBoard from "./pages/SingleBoard";
 import Boards from "./pages/Boards";
 import About from "./pages/About";
+import ErrorPage from "./pages/ErrorPage";
 function App() {
   const navigate = useNavigate();
   const [isAuth, setIsAuth] = useState(
@@ -25,6 +26,7 @@ function App() {
     signOut(auth).then(() => {
       localStorage.removeItem("isAuth");
       setIsAuth(false);
+      navigate("/");
     });
   };
   return (
@@ -40,8 +42,12 @@ function App() {
           element={<Home navigate={navigate} isAuth={isAuth} />}
         />
         <Route path="/login" element={<Login setIsAuth={setIsAuth} />} />
-        <Route path="/sigleBoard:id" element={<SingleBoard />} />
+        <Route
+          path="/sigleBoard:id"
+          element={<SingleBoard isAuth={isAuth} />}
+        />
         <Route path="/aboutus" element={<About />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </div>
   );

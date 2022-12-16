@@ -6,10 +6,10 @@ function About() {
       className="min-h-screen top-navbar w-full lg:inline-flex lg:flex-grow lg:w-auto space-x-10 shadow flex flex-row bg-light-pink "
       id="navigation"
     >
-      <h1 className="md:ml-10 text-5xl  tracking-wide font-semibold hover:text-purple-800 px-3  py-10 justify-center ">
+      <h1 className="md:ml-10 text-5xl text-gray-800  tracking-wide font-semibold hover:text-purple-800 px-3  py-20 justify-center ">
         About
       </h1>
-      <p className="text-2xl lg:inline-flex lg:w-auto w-full px-3 py-10 items-center justify-center shadow">
+      <p className="text-2xl lg:inline-flex lg:w-auto w-full text-gray-800  px-3 py-10 items-center justify-center shadow">
         ipsum dolor sit amet consectetur, adipisicing elit. Iusto labore sunt
         earum corporis obcaecati eveniet doloremque reprehenderit incidunt illum
         libero quis pariatur, dicta commodi itaque necessitatibus ea voluptate

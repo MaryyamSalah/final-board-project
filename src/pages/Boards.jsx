@@ -34,12 +34,18 @@ function Boards({ navigate, isAuth }) {
   const [boardsList, setBoardsList] = useState([]);
   const boardsCollectionRef = collection(db, "Boards");
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await getDocs(boardsCollectionRef);
-      setBoardsList(result.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
+    if (isAuth) {
+      const fetchData = async () => {
+        const result = await getDocs(boardsCollectionRef);
+        setBoardsList(
+          result.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        );
+      };
 
-    fetchData();
+      fetchData();
+    } else {
+      navigate("/login");
+    }
   }, []);
   function goToSingleBoard(id) {
     navigate(`./sigleBoard:${id}`);
@@ -51,7 +57,7 @@ function Boards({ navigate, isAuth }) {
   }
   return (
     <div className="bg-light-pink min-h-screen ">
-      <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 px-10 py-8 gap-5">
+      <div className="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 px-10 pt-20 gap-5">
         {boardsList.map((bord) => {
           if (isAuth && bord.author.id === auth.currentUser.uid) {
             return (
@@ -84,7 +90,7 @@ function Boards({ navigate, isAuth }) {
             <input
               type="text"
               onChange={changeTitleInput}
-              className="px-2 py-1 text-lg mx-5  bg-gray-800 text-white"
+              className="px-2 py-1 text-lg mx-5  bg-gray-800 text-white rounded-lg focus:outline-none focus:border-purple-700 focus:border"
             />
             <input
               type="submit"

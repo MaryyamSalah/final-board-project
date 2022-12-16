@@ -11,7 +11,7 @@ function Home({ isAuth }) {
     <div className="bg-[#E0DFE7] min-h-screen flex flex-col xl:flex-row justify-between">
       <div className="flex justify-center flex-col text-center mt-20 xl:mt-0 xl:-translate-y-16 pl-20">
         <h1 className="text-6xl text-gray-800 font-bold ">
-          Retask brings all your tasks, <br />
+          Re:Tasks brings all your tasks, <br />
           teammates, and tools together
         </h1>
         <p className="text-purple-800 my-3">
