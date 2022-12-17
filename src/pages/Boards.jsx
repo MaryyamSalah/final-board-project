@@ -28,7 +28,7 @@ function Boards({ navigate, isAuth }) {
       const path = r._key.path.segments.join("/");
       const newCollectionRef = collection(db, path, "tasksList");
       await addDoc(newCollectionRef, {});
-      navigate(`./sigleBoard:${r.id}`);
+      navigate(`./sigleBoard/${r.id}`);
     }
   };
   const [boardsList, setBoardsList] = useState([]);
@@ -48,7 +48,7 @@ function Boards({ navigate, isAuth }) {
     }
   }, []);
   function goToSingleBoard(id) {
-    navigate(`./sigleBoard:${id}`);
+    navigate(`./sigleBoard/${id}`);
   }
   async function remove(id) {
     const boardDoc = doc(db, "Boards", id);

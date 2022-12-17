@@ -4,7 +4,6 @@ import { auth, provider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
 import sign from "../images/sign.png";
 import google from "../images/google.png";
-import Mainpage from "../components/MainPage";
 function Login({ setIsAuth }) {
   let navigate = useNavigate();
   const signInWithGoogle = () => {

@@ -43,7 +43,7 @@ function App() {
         />
         <Route path="/login" element={<Login setIsAuth={setIsAuth} />} />
         <Route
-          path="/sigleBoard:id"
+          path="/sigleBoard/:id"
           element={<SingleBoard isAuth={isAuth} />}
         />
         <Route path="/aboutus" element={<About />} />

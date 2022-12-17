@@ -1,7 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { auth } from "../firebase";
-import { onAuthStateChanged } from "firebase/auth";
 function Navbar({ isAuth, signUserOut }) {
   return (
     <nav className="bg-gray-800 py-3 fixed top-0 left-0 z-20 w-full">
